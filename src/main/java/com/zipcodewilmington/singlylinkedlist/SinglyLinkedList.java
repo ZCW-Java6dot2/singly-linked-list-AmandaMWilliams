@@ -1,9 +1,11 @@
 package com.zipcodewilmington.singlylinkedlist;
 
+import java.util.Collection;
+
 /**
  * Created by leon on 1/10/18.
  */
-public class SinglyLinkedList<SomeType> {
+public class SinglyLinkedList<SomeType extends Comparable<SomeType>> {
     private static int counter;
     private Node<SomeType> tail;
     private Node<SomeType> head;
@@ -135,25 +137,31 @@ public class SinglyLinkedList<SomeType> {
                 copy.add(tempNode);
                 currentNode = currentNode.getNext();
             }
-            copy.add(currentNode.getData());
+            copy.add((Comparable) currentNode.getData());
         }
         return copy;
     }
     public void sort(SinglyLinkedList passedList) {
-        int currentSize = passedList.size();
-        Node tempNode = null;
-        int temp;
-        for (int i = 1; i < currentSize; i++) {
-            boolean isSorted = true;
-            for (int j = 0; j < currentSize - i; j++) {
-                if (passedList.get(j) > passedList.get(j + 1)) {
-                    int tempHolder = passedList.get(j);
-                    passedList.get(j) = passedList.get(j + 1);
-                    passedList.get(j + 1) = tempHolder;
-                    isSorted = false;
+        int size = passedList.size();
+        if (size > 1) {
+            for (int i = 0; i < size; i++) {
+                Node currentNode = head;
+                Node next = head.getNext();
+                for (int j = 0; j < size - 1; j++) {
+                    if (currentNode.getData().compareTo(next.getData())) {
+                        Node temp = currentNode;
+                        currentNode = next;
+                        next = temp;
+                    }
+                    currentNode = next;
+                    next = next.getNext();
                 }
             }
         }
+    }
+
+    public int compareTo(Node<SomeType> other){
+        return 0;
     }
     public void clear()
     {
