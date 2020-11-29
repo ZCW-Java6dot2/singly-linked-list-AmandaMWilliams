@@ -3,84 +3,161 @@ package com.zipcodewilmington.singlylinkedlist;
 /**
  * Created by leon on 1/10/18.
  */
-public class SinglyLinkedList<SomeType> {
-
-    private int listCount;
-    private Node<SomeType> head;
+public class SinglyLinkedList<SomeType extends Comparable<SomeType>> {
+    private static int counter;
     private Node<SomeType> tail;
+    private Node<SomeType> head;
     private int length;
-
+    private static int getCounter() {
+        return counter;
+    }
+    private static void incrementCounter() {
+        counter++;
+    }
+    private void decrementCounter() {
+        counter--;
+    }
     public SinglyLinkedList() {
         tail = null;
         head = null;
         length = 0;
     }
-
-    private class Node<SomeType> {
-        private Node next;
-        private SomeType data;
-        private int index = 0;
-
-        public Node(SomeType dataValue, Node next) {
-            this.data = dataValue;
-            this.next = null;
+    public int size() {
+        return getCounter();
+    }
+    public SomeType get(int index) {
+        int tempIndex = head.getIndex();
+        Node<SomeType> tempNode = head;
+        while (tempIndex != index) {
+            tempIndex++;
+            tempNode = tempNode.getNext();
         }
-
-        public Node getNext() {
-            return next;
+        return tempNode.getData();
+    }
+    public void set(int index, SomeType data) {
+        int tempIndex = head.getIndex();
+        Node<SomeType> tempNode = head;
+        while (tempIndex != index) {
+            tempIndex++;
+            tempNode = tempNode.getNext();
         }
-
-        public void setNext(Node next) {
-            this.next = next;
+        tempNode.setData(data);
+    }
+    public void swap(SomeType data1, SomeType data2) {
+        Node<SomeType> tempNode = head;
+        int indexData1 = -1;
+        int indexData2 = -1;
+        while (tempNode != null) {
+            if (tempNode.getData() == data1)
+                indexData2 = tempNode.getIndex();
+            else if (tempNode.getData() == data2)
+                indexData1 = tempNode.getIndex();
+            tempNode = tempNode.getNext();
         }
-
-        public SomeType getData() {
-            return data;
+        this.set(indexData2, data1);
+        this.set(indexData1, data2);
+    }
+    public void add(SomeType data) {
+        if (head == null) {
+            head = new Node(data);
         }
-
-        @SuppressWarnings("unused")
-        public void setData(SomeType data) {
-            this.data = data;
+        Node temp = new Node(data);
+        Node current = head;
+        if (current != null) {
+            while (current.getNext() != null) {
+                current = current.getNext();
+            }
+            current.setNext(temp);
         }
-
-        public int getIndex(int index) {
-            return index;
+        incrementCounter();
+    }
+    public void add(SomeType data, int index) {
+        if (head == null) {
+            head = new Node(data);
         }
-
-        public void setIndex(int index) {
-            this.index = index;
+        Node tempNode = new Node(data);
+        Node currentNode = head;
+        if (currentNode != null) {
+            for (int i = 0; i < index && currentNode.getNext() != null; i++) {
+                currentNode = currentNode.getNext();
+            }
+            tempNode.setNext(currentNode.getNext());
+            currentNode.setNext(tempNode);
+        }
+        incrementCounter();
+    }
+    public void remove(int index) {
+        Node currentNode;
+        if (head != null) {
+            currentNode = head;
+            for (int i = 0; i <= index; i++) {
+                if (currentNode.getNext() != null) {
+                    currentNode = currentNode.getNext();
+                }
+            }
+            currentNode.setNext(currentNode.getNext().getNext());
+        }
+        decrementCounter();
+    }
+    public Boolean contains(SomeType data) {
+        Node currentNode;
+        if (head != null) {
+            currentNode = head;
+            for (int i = 0; i < size(); i++) {
+                if (currentNode.getData().equals(data)) {
+                    return true;
+                }
+                currentNode = currentNode.getNext();
+            }
+        }
+        return false;
+    }
+    public int find(SomeType data) {
+        Node currentNode;
+        if (head != null) {
+            currentNode = head;
+            for (int i = 0; i < size(); i++) {
+                if (currentNode.getData().equals(data)) {
+                    return i;
+                }
+                currentNode = currentNode.getNext();
+            }
+        }
+        return -1;
+    }
+    public SinglyLinkedList copy() {
+        SinglyLinkedList copy = new SinglyLinkedList();
+        SomeType tempNode = null;
+        Node currentNode = head.getNext();
+        if (currentNode != null) {
+            while (currentNode.getNext() != null) {
+                tempNode = (SomeType) currentNode.getData();
+                copy.add(tempNode);
+                currentNode = currentNode.getNext();
+            }
+            copy.add(currentNode.getData());
+        }
+        return copy;
+    }
+    public void sort(SinglyLinkedList passedList) {
+        int currentSize = passedList.size();
+        Node tempNode = null;
+        int temp;
+        for (int i = 1; i < currentSize; i++) {
+            boolean isSorted = true;
+            for (int j = 0; j < currentSize - i; j++) {
+                if (passedList.get(j) > passedList.get(j + 1)) {
+                    int tempHolder = passedList.get(j);
+                    passedList.get(j) = passedList.get(j + 1);
+                    passedList.get(j + 1) = tempHolder;
+                    isSorted = false;
+                }
+            }
         }
     }
-
-    public void addFirstElement(Node obj) {
-        head = new Node<SomeType>(obj, null);
-        head.setIndex(0);
-    }
-
-    public void addSecondElement(Node obj) {
-        tail = new Node<SomeType>(obj, null);
-        head.setNext(tail);
-        tail.setIndex(1);
-    }
-
-    public void addThirdElementOnward(Node obj) {
-        int nextIndex = tail.getIndex() + 1;
-        tail.setNext(new Node<SomeType>(obj, null));
-        tail = tail.getNext();
-        tail.setIndex(nextIndex);
-    }
-
-    public void add(Node data){
-        if (head == null)
-            addFirstElement(data);
-    }
-
-    public void shiftIndex(Node<SomeType> node, int currentIndex){
-        while(node != null){
-            node.setIndex(currentIndex);
-            node = node.getNext();
-            currentIndex++;
-        }
+    public void clear()
+    {
+        head = null;
+        counter = 0;
     }
 }
-

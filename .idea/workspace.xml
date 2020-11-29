@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f0c6f35-1ac5-49ea-b41e-20445c07c5c6" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zipcodewilmington/singlylinkedlist/Node.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/zipcodewilmington/singlylinkedlist/SinglyLinkedList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zipcodewilmington/singlylinkedlist/SinglyLinkedList.java" afterDir="false" />
     </list>
@@ -164,10 +163,11 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1244" y="141" key="#com.intellij.ide.util.MemberChooser" timestamp="1606269630947">
-      <screen x="-1440" y="0" width="1440" height="900" />
+    <state x="-1244" y="160" key="#com.intellij.ide.util.MemberChooser" timestamp="1606660558273">
+      <screen x="-1440" y="23" width="1440" height="877" />
     </state>
     <state x="-1244" y="141" key="#com.intellij.ide.util.MemberChooser/0.0.1280.800/-1440.0.1440.900@-1440.0.1440.900" timestamp="1606269630947" />
+    <state x="-1244" y="160" key="#com.intellij.ide.util.MemberChooser/0.23.1280.715/-1440.23.1440.877@-1440.23.1440.877" timestamp="1606660558273" />
     <state x="-1301" y="301" width="494" height="276" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1606268348956">
       <screen x="-1440" y="23" width="1440" height="810" />
     </state>
